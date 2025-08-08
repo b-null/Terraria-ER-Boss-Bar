@@ -12,6 +12,7 @@ public class EldenBossBar : ModBossBar
 
     private Config config = ModContent.GetInstance<Config>();
     private Texture2D hpBg = ModContent.Request<Texture2D>("ERBossBar/Assets/Textures/HP_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+    private Texture2D hpBase = ModContent.Request<Texture2D>("ERBossBar/Assets/Textures/HP_BASE", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
     private Texture2D hpFill = ModContent.Request<Texture2D>("ERBossBar/Assets/Textures/HP_FILL", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
     public override void PostDraw(SpriteBatch spriteBatch, NPC npc, BossBarDrawParams drawParams)
@@ -43,6 +44,15 @@ public class EldenBossBar : ModBossBar
         int fillWidth = (int)((hpFill.Width * hpRatio) * scale);
         Rectangle fillRect = new Rectangle(0, 0, (int)(fillWidth / scale), hpFill.Height);
         spriteBatch.Draw(hpFill, pos - new Vector2(hpBg.Width * scale / 2, 0), fillRect, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+        // Draw the end marker
+        float fillEndX = pos.X - hpBg.Width / 2 + fillRect.Width * scale; // X coordinate where fill ends
+        float markerHeight = hpFill.Height * scale; // Match bar height
+        float markerWidth = 2f * scale; // Small thin bar
+        spriteBatch.Draw(TextureAssets.MagicPixel.Value,
+            new Rectangle((int)fillEndX, (int)pos.Y, (int)markerWidth, (int)markerHeight),
+            new Color(230, 230, 196));
+        // Draw base
+        spriteBatch.Draw(hpBase, pos - new Vector2(hpBase.Width * scale / 2, 0), null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
 
         // Boss Name centered
         Vector2 nameSize = FontAssets.MouseText.Value.MeasureString(npc.FullName);
