@@ -1,1 +1,5 @@
-This description will show up on the steam page, check out https://steamcommunity.com/comment/Guide/formattinghelp.
+All this mod does is change boss health bars to look like Elden Ring's health bars, though it isn't 100% accurate, I'd say it's close enough.
+
+I'm pretty new to Terraria modding so, for those who might be interested in this mod's repo, itt might be a mess, but here you go:
+
+Github repository: [url=https://github.com/b-null/Terraria-ER-Boss-Bar] ER Boss Bar [/url]

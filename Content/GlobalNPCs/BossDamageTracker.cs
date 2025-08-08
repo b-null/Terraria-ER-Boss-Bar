@@ -10,7 +10,23 @@ public class BossDamageTracker : GlobalNPC
 
     public override bool InstancePerEntity => true;
 
-    public override void AI(NPC npc)
+    public override void SetDefaults(NPC entity)
+    {
+        if (entity.boss)
+        {
+            entity.BossBar = ModContent.GetInstance<EldenBossBar>();
+        }
+    }
+
+    public int GetRecentDamage() => recentDamage;
+
+    public float GetYellowBarRatio(NPC npc)
+    {
+        if (npc.lifeMax == 0) return 0f;
+        return MathHelper.Clamp((npc.life + recentDamage) / (float)npc.lifeMax, 0f, 1f);
+    }
+
+    public override bool PreAI(NPC npc)
     {
         if (npc.boss && npc.active)
         {
@@ -28,13 +44,6 @@ public class BossDamageTracker : GlobalNPC
 
             previousLife = npc.life;
         }
-    }
-
-    public int GetRecentDamage() => recentDamage;
-
-    public float GetYellowBarRatio(NPC npc)
-    {
-        if (npc.lifeMax == 0) return 0f;
-        return MathHelper.Clamp((npc.life + recentDamage) / (float)npc.lifeMax, 0f, 1f);
+        return base.PreAI(npc);
     }
 }
