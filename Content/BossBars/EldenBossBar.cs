@@ -1,18 +1,18 @@
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using Terraria.UI;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent.UI.BigProgressBar;
 using Terraria;
 using Terraria.DataStructures;
 using ERBossBar.Content;
+using System;
+using Terraria.GameContent;
 
 public class EldenBossBar : ModBossBar
 {
 
     private Config config = ModContent.GetInstance<Config>();
-    private Texture2D hpBg = ModContent.Request<Texture2D>("ERBossBar/Assets/Textures/HP_BG").Value;
-    private Texture2D hpFill = ModContent.Request<Texture2D>("ERBossBar/Assets/Textures/HP_FILL").Value;
+    private Texture2D hpBg = ModContent.Request<Texture2D>("ERBossBar/Assets/Textures/HP_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+    private Texture2D hpFill = ModContent.Request<Texture2D>("ERBossBar/Assets/Textures/HP_FILL", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 
     public override void PostDraw(SpriteBatch spriteBatch, NPC npc, BossBarDrawParams drawParams)
     {
@@ -22,56 +22,41 @@ public class EldenBossBar : ModBossBar
             base.PostDraw(spriteBatch, npc, drawParams);
             return;
         }
+
+        if (hpBg == null)
+            Console.WriteLine("hpBg texture not found!");
+        if(hpFill == null)
+            Console.WriteLine("hpFill texture not found!");
+
         var tracker = npc.GetGlobalNPC<BossDamageTracker>();
 
-        Texture2D whiteTex = Terraria.GameContent.TextureAssets.MagicPixel.Value;
+        Vector2 pos = new Vector2(Main.screenWidth / 2f, Main.screenHeight - 80);
 
-        Vector2 pos = new Vector2(Main.screenWidth / 2f, Main.screenHeight - 50);
-        float barWidth = 900f;
-        float barHeight = 8f;
+        float scale = scale = (Main.screenWidth / 1920f) * (Main.UIScale);
 
         float hpRatio = drawParams.Life / drawParams.LifeMax;
         float delayedRatio = tracker.GetYellowBarRatio(npc);
 
-        // Bar positions
-        Rectangle border = new Rectangle(
-            (int)(pos.X - barWidth / 2 - 1),
-            (int)(pos.Y - 1),
-            (int)(barWidth + 2),
-            (int)(barHeight + 2)
-        );
-
-        Rectangle backgroundBar = new Rectangle(
-            (int)(pos.X - barWidth / 2),
-            (int)pos.Y,
-            (int)(barWidth),
-            (int)barHeight
-        );
-
-        Rectangle redBar = new Rectangle(
-            (int)(pos.X - barWidth / 2),
-            (int)pos.Y,
-            (int)(barWidth * hpRatio),
-            (int)barHeight
-        );
-
-        // Draw white (border) bar
-        spriteBatch.Draw(whiteTex, border, Color.White);
-        // Draw black (background) bar
-        spriteBatch.Draw(whiteTex, backgroundBar, Color.Black);
-        // Draw red (actual HP) bar on top
-        spriteBatch.Draw(whiteTex, redBar, Color.Red);
+        // Draw background
+        spriteBatch.Draw(hpBg, pos - new Vector2(hpBg.Width * scale / 2, 0), null, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+        // Draw fill
+        int fillWidth = (int)((hpFill.Width * hpRatio) * scale);
+        Rectangle fillRect = new Rectangle(0, 0, (int)(fillWidth / scale), hpFill.Height);
+        spriteBatch.Draw(hpFill, pos - new Vector2(hpBg.Width * scale / 2, 0), fillRect, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
 
         // Boss Name centered
-        Utils.DrawBorderString(spriteBatch, npc.FullName, pos - new Vector2(barWidth / 2, 30), Color.White, 1f, 0.5f);
+        Vector2 nameSize = FontAssets.MouseText.Value.MeasureString(npc.FullName);
+        
+
+        Utils.DrawBorderString(spriteBatch, npc.FullName, new Vector2(pos.X - hpBg.Width * scale / 2 + 20, pos.Y - 30), Color.White, 1f * scale, 0f);
 
         // Damage number to the right
         int damage = tracker.GetRecentDamage();
         if (damage > 0)
         {
             string dmgText = $"{damage}";
-            Vector2 dmgPos = pos + new Vector2(barWidth / 2, -30);
-            Utils.DrawBorderString(spriteBatch, dmgText, dmgPos, Color.White, 0.8f, 0f);
+            Vector2 dmgPos = pos + new Vector2(hpBg.Width * scale / 2 - FontAssets.MouseText.Value.MeasureString(dmgText).X, -30);
+            Utils.DrawBorderString(spriteBatch, dmgText, dmgPos, Color.White, 0.8f * scale, 0f);
         }
     }
 

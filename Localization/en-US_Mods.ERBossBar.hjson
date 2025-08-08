@@ -1,1 +1,10 @@
+Configs: {
+	Config: {
+		DisplayName: Config
 
+		EnableCustomBossBar: {
+			Label: Enable Custom Boss Bar
+			Tooltip: ""
+		}
+	}
+}
