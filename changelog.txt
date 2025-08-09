@@ -1,1 +1,1 @@
-- Fixed: Custom bar was not shown for some bosses (Like Eater of Worlds)
+- Removed config (maybe it will be added later)

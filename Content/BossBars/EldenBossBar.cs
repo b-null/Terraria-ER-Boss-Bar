@@ -1,17 +1,12 @@
-using ERBossBar.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ModLoader;
-using static System.Net.Mime.MediaTypeNames;
 
 public class EldenBossBar : GlobalBossBar
-{
-
-    private Config config = ModContent.GetInstance<Config>();
+{    
     private Texture2D hpBg = ModContent.Request<Texture2D>("ERBossBar/Assets/Textures/HP_BG", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
     private Texture2D hpBase = ModContent.Request<Texture2D>("ERBossBar/Assets/Textures/HP_BASE", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
     private Texture2D hpFill = ModContent.Request<Texture2D>("ERBossBar/Assets/Textures/HP_FILL", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
@@ -22,7 +17,7 @@ public class EldenBossBar : GlobalBossBar
     {
         Vector2 pos = new Vector2(Main.screenWidth / 2f, Main.screenHeight - 80);
 
-        float scale = scale = (Main.screenWidth / 1920f) * Main.UIScale * config.BossBarScale;
+        float scale = scale = (Main.screenWidth / 1920f) * Main.UIScale;
 
         float dmgRatio = cachedLife / drawParams.LifeMax;
 
