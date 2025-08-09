@@ -7,7 +7,8 @@ namespace ERBossBar.Content
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
-        [DefaultValue(true)]
-        public bool EnableCustomBossBar;
+        [Range(0.3f, 2f)]
+        [DefaultValue(1f)]
+        public float BossBarScale;
     }
 }
