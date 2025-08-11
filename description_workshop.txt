@@ -1,5 +1,5 @@
-All this mod does is change boss health bars to look like Elden Ring's health bars, though it isn't 100% accurate, I'd say it's close enough.
-
-I'm pretty new to Terraria modding so, for those who might be interested in this mod's repo, itt might be a mess, but here you go:
+All this mod does is change boss health bars to look like Elden Ring's health bars. Though it isn't 100% accurate, I'd say it's close enough.
 
 Github repository: [url=https://github.com/b-null/Terraria-ER-Boss-Bar] ER Boss Bar [/url]
+
+Note: After testing this with other mods, I noticed some mods can make bosses spawn with more HP than their maximum HP value which, in theory, would cause the boss bar to overflow. I made sure my bar doesn't overflow, so if you're hitting a boss and notice its health bar isn't decreasing, this might be why.

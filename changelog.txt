@@ -1,1 +1,7 @@
-- Removed config (maybe it will be added later)
+Ver. 1.0.3
+
+I've been fixing some things... hopefully. Sometimes we think they're fixed but somehow they aren't, but anyway. Here's the changelog:
+
+- Fixed: When spawning a boss again (or a different one), the health bar would show a big damage number and show the yellow bar way offscreen when the boss hasn't even been damaged.
+- Fixed: If a boss spawns with more HP than its maximum HP value, the bar would overflow. (Reminder: I'm not changing the boss' HP so hitting it will look like you're not damaging it, but don't worry. As soon as you get its HP under its Max HP, you'll see that bar go down)
+- Fixed: When fighting multiple bosses at once, hitting another boss would also show a big damage number if this other boss has less health than the previous one.
