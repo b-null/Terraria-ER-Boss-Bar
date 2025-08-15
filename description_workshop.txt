@@ -1,4 +1,4 @@
-All this mod does is change boss health bars to look like Elden Ring's health bars. Though it isn't 100% accurate, I'd say it's close enough.
+This mod changes boss health bars to look like Elden Ring's health bars. Though it isn't 100% accurate, I'd say it's close enough.
 
 Github repository: [url=https://github.com/b-null/Terraria-ER-Boss-Bar] ER Boss Bar [/url]
 
